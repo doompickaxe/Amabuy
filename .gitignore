@@ -1,0 +1,8 @@
+.gradle/
+.idea/
+
+out/
+
+*.iml
+
+buyed.txt

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ui.amabuy">
+    <center>
+        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label text="Please enter your Amazon Credentials:"/>
+                <TextField id="email" fx:id="email" onAction="#checkAction" onInputMethodTextChanged="#checkAction"
+                           onKeyTyped="#checkAction" promptText="email">
+                    <VBox.margin>
+                        <Insets top="20.0"/>
+                    </VBox.margin>
+                </TextField>
+                <CheckBox id="check" fx:id="check" focusTraversable="false" mnemonicParsing="false"
+                          onAction="#checkAction" text="Remember me">
+                    <VBox.margin>
+                        <Insets bottom="20.0"/>
+                    </VBox.margin>
+                </CheckBox>
+                <PasswordField id="passwd" fx:id="passwo" promptText="passwort"/>
+                <Label text="Money available(shipping will be included):">
+                    <VBox.margin>
+                        <Insets top="10.0"/>
+                    </VBox.margin>
+                </Label>
+                <TextField id="moneten" fx:id="moneten" promptText="money"/>
+                <StackPane prefHeight="50.0" prefWidth="200.0">
+                    <children>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#go"
+                                prefHeight="26.0" prefWidth="78.0" text="Go"/>
+                        <CheckBox id="testrun" fx:id="testrun" mnemonicParsing="false" text="Testrun">
+                            <StackPane.margin>
+                                <Insets right="200.0"/>
+                            </StackPane.margin>
+                        </CheckBox>
+                    </children>
+                </StackPane>
+                <TextArea id="log" fx:id="log" editable="false" prefHeight="200.0" prefWidth="200.0"/>
+                <Label text="Note: No information will be saved"/>
+            </children>
+        </VBox>
+    </center>
+</BorderPane>

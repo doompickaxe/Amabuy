@@ -1,0 +1,20 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+repositories {
+    mavenCentral()
+}
+
+mainClassName = 'ui.Spider'
+
+jar {
+    baseName = 'AmazonCrawl'
+    version =  '1.0.0'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.10.3'
+}
