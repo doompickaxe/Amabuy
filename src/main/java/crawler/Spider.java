@@ -230,24 +230,23 @@ public class Spider {
             forms = doc.select("form[name=signIn]");
             form = (FormElement) forms.first();
 
-            if (form != null) {
-
-            }
+            if (form != null)
+                signingIn(form);
 
             forms = doc.select("form[id=spc-form]");
             if (forms.isEmpty()) {
                 forms = doc.select("div#address-book-entry-0");
                 url = forms.first().child(1).child(0).child(0).attr("href");
-                doc = conn.userAgent(USER_AGENT).cookies(cookies).url("http://www.amazon.de" + url).get();
-                loadCookies(conn);
+                doc = getDocument("http://www.amazon.de" + url, true)
+                        .orElseThrow(ReflectiveOperationException::new);
             }
             form = (FormElement) forms.first();
 
             Elements elements = form.select("td.grand-total-price");
-            String preis = elements.first().child(0).text();
+            String price = elements.first().child(0).text();
 
-            if (Double.valueOf((preis.substring(4)).replace(',', '.')) <= maxPrice) {
-                log.appendText("with shipping: " + preis + " EUR\n");
+            if (Double.valueOf((price.substring(4)).replace(',', '.')) <= maxPrice) {
+                log.appendText("with shipping: " + price + " EUR\n");
                 Elements dates = form.select("span[data-field=promiseday]");
                 String promiseDateFrom = dates.first().text();
                 String promiseDateTo = dates.get(1).text();
@@ -317,7 +316,7 @@ public class Spider {
         }
     }
 
-    private boolean signingIn(FormElement form) {
+    private void signingIn(FormElement form) {
         Document doc;
         Connection conn;
 
@@ -329,10 +328,10 @@ public class Spider {
         Element pwd = pwds.first();
         pwd.val(this.pwd);
         conn = form.submit();
-        doc = conn.userAgent(USER_AGENT).cookies(cookies).timeout(5000).post();
+        doc = postDocument(conn).orElseThrow(RuntimeException::new);
         loadCookies(conn);
         doc.select("input[id=ap_password]").first().val(this.pwd);
-        doc = conn.userAgent(USER_AGENT).cookies(cookies).timeout(5000).post();
+        doc = postDocument(conn).orElseThrow(RuntimeException::new);
         loadCookies(conn);
 
         if (doc.toString().contains("Ein Problem ist aufgetreten")) {
